@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Timer.cln</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Exaple For Timer</h1>
+    <div style="width: 100vw; height: 50vh">
+      <textarea
+        style="
+          width: 90%;
+          height: 90%;
+          overflow-y: scroll;
+          font-family: monospace;
+          font-weight: 600;
+        "
+		readonly
+      >
+<div>
+	<svg id="timer" width="100px" height="100px">
+	<circle
+		fill="transparent"
+		stroke="gray"
+		stroke-width="5"
+		cx="50px"
+		cy="50px"
+		r="25px"
+		transform="rotate(-90 50 50)"
+	/>
+	<circle
+		id="circle"
+		stroke="green"
+		fill="transparent"
+		stroke-width="5"
+		cx="50px"
+		cy="50px"
+		r="25px"
+		transform="rotate(-90 50 50)"
+	/>
+	</svg>
+	<p type="text" id="number">30</p>
+</div>
+
+
+<script>
+	const number = document.querySelector("#number");
+	const circle = document.querySelector("#circle");
+
+	const timer = new Timer(
+	parseInt(number.innerText),
+	0.1,
+	100,
+	(callbacks = {
+		onStart(n) {
+			this.offset = 2 * Math.PI * circle.r.baseVal.value;
+			this.timeDue = n;
+			circle.setAttribute("stroke-dasharray", this.offset);
+			circle.setAttribute("stroke-dashoffset", this.offset);
+		},
+		onRun(time) {
+			if (this.offset > 0) {
+				circle.setAttribute(
+				"stroke-dashoffset",
+				(this.offset * time) / this.timeDue - this.offset
+				);
+				number.innerText = parseInt(this.value);
+			}
+		},
+		onPause() {
+			this.value = this.timeDue;
+			this.start();
+		},
+	})
+	);
+
+	timer.start();
+</script>
+<style>
+	div{
+		height: 100px;
+		width: 100px;
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	#timer{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	#number{
+		font-size: 25px;
+		margin: 0;
+		padding: 0;
+		user-select: none;
+	}
+</style>
+      </textarea>
+    </div>
+    <h1>OutPut</h1>
+    <div>
+      <svg id="timer" width="100px" height="100px">
+        <circle
+          fill="transparent"
+          stroke="gray"
+          stroke-width="5"
+          cx="50px"
+          cy="50px"
+          r="25px"
+          transform="rotate(-90 50 50)"
+        />
+        <circle
+          id="circle"
+          stroke="green"
+          fill="transparent"
+          stroke-width="5"
+          cx="50px"
+          cy="50px"
+          r="25px"
+          transform="rotate(-90 50 50)"
+        />
+      </svg>
+      <p type="text" id="input">30</p>
+    </div>
+    <script src="Timer.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
