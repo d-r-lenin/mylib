@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cascade example</title>
+    <script src="./libs/jquery-3.6.1.js"></script>
+    <script src="./cas.js"></script>
+
+    <style>
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+
+        }
+        .dat-projects-list {
+            height: 100%;
+            background-color: azure;
+        }
+
+        .project-card {
+            width: 150px;
+            height: 150px;
+            background-color: #ffd0d0;
+            margin: 10px;
+            display: inline-block;
+            transition: all 0.5s;
+        }
+
+        .selected-card {
+            background-color: #d0ffd0;
+        }
+
+
+    </style>
+</head>
+<body>
+     <div class="container">
+        <ul class="ani-par dat-projects-list">
+                    
+                     <div class="project-card ani-li  ">
+                        hello
+                    </div>
+                    <div class="project-card ani-li selected-card  ">
+                        world
+                    </div>
+                    <div class="project-card ani-li  ">
+                        hello
+                    </div>
+                    <div class="project-card ani-li  ">
+                        world
+                    </div>
+                    <div class="project-card ani-li  ">
+                        hello
+                    </div>
+                    <div class="project-card ani-li  ">
+                        world
+                    </div>
+            </ul>
+     </div>
+
+     <div class="controllers" style="position: fixed; bottom: 0; left: 0; background-color: #f0f0f0;width:100vw;display:flex; align-items: center; justify-content: center;gap:1rem">
+        <button onclick="ani.move('l')">left</button>
+        <button onclick="ani.move('r')">right</button>
+        <label for="sqxin">sqx</label>
+        <input type="range" name="sqx" id="sqxin" onchange="ani.sqx=this.value/100;ani.render();" min="0" max="300">
+        <label for="sqyin">sqy</label>
+        <input type="range" name="sqy" id="sqyin" onchange="ani.sqy=this.value/100;ani.render();" min="0" max="300">
+
+        <!-- show and give edit option for how many items -->
+        <label for="itemCount">item count</label>
+        <input type="number" name="itemCount" id="itemCount" min="1" max="20" value="6">
+        <button  class="update" onclick="update()">update</button>
+
+     </div>
+
+    <script>
+        var ani = new Carousel({
+            activeClass: "selected-card"
+        });
+
+
+        function update() {
+            var itemCount = $("#itemCount").val();
+            var html = "<div class='project-card ani-li selected-card'>hello<button class='removeItemBtn'>X</button></div>";
+            for (var i = 1; i < itemCount; i++) {
+                html += `<div class="project-card ani-li  ">
+                        hello
+                    </div>`;
+            }
+            
+            const list = $(".ani-par");
+            list.html(html);
+            ani.render();
+            ani.move('l');
+        }
+
+
+        
+
+
+    </script>
+
+</body>
+</html>
